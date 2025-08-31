@@ -1,0 +1,11 @@
+export enum ConfigurationKeys {
+  PORT = 'PORT',
+  BASE_URL = 'BASE_URL',
+  HOST = 'HOST',
+  USERNAME = 'USERNAME',
+  PASSWORD = 'PASSWORD',
+  DATABASE = 'DATABASE',
+  JWT_SECRET = 'JWT_SECRET',
+  JWT_EXPIRES_IN = 'JWT_EXPIRES_IN',
+  LOG_LEVELS = 'LOG_LEVELS',
+}

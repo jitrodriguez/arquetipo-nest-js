@@ -1,0 +1,67 @@
+##### Esto es editable por el programador ##########
+variables:
+  own:
+    config:
+      - name: "NODE_ENV"
+        value: "development"
+    secret: {}
+  common:
+    config: {}
+    secret: {}
+
+#######Esto es editable por el DevOps#######
+
+global:
+  environment: "development"
+  replicaCount: "1"
+  revisionHistoryLimit: "5"
+  minReadySeconds: "0"
+  version: "v1"
+
+container:
+  registry: "-"
+  tag: "-"
+  pullPolicy: "IfNotPresent"
+  livenessProbe:
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - |
+          if [ "$(curl -s http://localhost:5000/api/v1/health-check/ | cut -d "{" -f 2 | cut -d "}" -f 1 | cut -d "," -f 1 )" != '"status":"UP"' ];then exit 1; fi
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    failureThreshold: 12
+  readinessProbe:
+    exec:
+      command:
+        - /bin/sh
+        - -c
+        - |
+          if [ "$(curl -s http://localhost:5000/api/v1/health-check/ | cut -d "{" -f 2 | cut -d "}" -f 1 | cut -d "," -f 1 )" != '"status":"UP"' ];then exit 1; fi
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    failureThreshold: 12
+  resources:
+    requests:
+      cpu: 75m
+      memory: 384Mi
+    limits:
+      #cpu: 300m
+      memory: 512Mi
+  port:
+    - name: ms-arq-py-port
+      servicePort: 80
+      containerPort: 5000
+      protocol: TCP
+
+hpa:
+  minReplicas: 1
+  maxReplicas: 1
+  targetMemory: 768Mi
+  targetCpu: 100m
+
+pdb:
+  minAvailable: 1
+
+volumes: {}

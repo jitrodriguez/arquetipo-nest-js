@@ -1,0 +1,12 @@
+{
+  "type": "sqlite",
+  "synchronize": false,
+  "logging": false,
+  "database": "./test/resource/db/test.db",
+  "entities": ["./build/domain/**/*.entity{.ts,.js}"],
+  "migrations": ["./build/resource/migration/*{.ts,.js}"],
+  "cli": {
+    "migrationsDir": "./build/resource/migration",
+    "entitiesDir": "./build/domain/entity"
+  }
+}
